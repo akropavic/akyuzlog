@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akyüz Lojistik | Esenyurt Merkezli Profesyonel Taşımacılık</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS BAŞLANGICI --- */
+        :root {
+            --primary: #0f172a; 
+            --accent: #dc2626;  
+            --text-light: #f8fafc;
+            --text-dark: #334155;
+            --bg-light: #f1f5f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            /* Yazı taşmalarını engellemek için hayat kurtaran kod: */
+            overflow-wrap: break-word; 
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            width: 100vw;
+        }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Logoyu ve menüyü aynı hizada tutar */
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -1px;
+            z-index: 1001; /* Mobilde menü açılsa bile logo üstte kalsın */
+        }
+
+        .logo span { color: var(--accent); }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover { color: var(--accent); }
+
+        .phone-btn {
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            white-space: nowrap;
+        }
+
+        .phone-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu (Mobil) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: #fff;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* Hero Bölümü (Açılış) */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 120px 5% 50px;
+            gap: 50px;
+            background: #fff;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 4.5vw, 65px);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero h1 span { color: var(--accent); }
+
+        .hero p {
+            font-size: clamp(16px, 1.8vw, 20px);
+            margin-bottom: 40px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .hero-image {
+            flex: 1;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .hero-image:hover img { transform: scale(1.05); }
+
+        /* Kurumsal Bilgi */
+        .info-section {
+            padding: 100px 5%;
+            text-align: center;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 45px);
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .info-section p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: clamp(16px, 1.5vw, 18px);
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        /* Galeri */
+        .gallery-section {
+            padding: 80px 5%;
+            background: #fff;
+        }
+
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+        }
+
+        .grid-item {
+            position: relative;
+            height: 280px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .grid-item:hover img { transform: scale(1.1); }
+
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+
+        .grid-item:hover .grid-overlay { opacity: 1; }
+        .grid-overlay h3 { color: #fff; font-size: 18px; }
+
+        /* İletişim & Harita */
+        .contact-section {
+            padding: 100px 5%;
+            background: var(--bg-light);
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            background: var(--primary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .contact-info {
+            flex: 1;
+            padding: 50px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-info h2 { font-size: clamp(26px, 3vw, 35px); margin-bottom: 30px; }
+        .contact-info p { font-size: clamp(15px, 1.5vw, 18px); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .contact-info a { color: #fff; text-decoration: none; transition: 0.3s; }
+        .contact-info a:hover { color: var(--accent); }
+
+        .map-container {
+            flex: 1.2;
+            min-height: 400px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: contrast(1.1) opacity(0.9);
+        }
+
+        /* Scroll Animasyonları */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            background: #020617;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+        }
+
+        /* --- MOBİL UYUM (RESPONSIVE) --- */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .hero-image {
+                order: -1; /* Mobilde fotoğrafı en üste alır */
+                max-height: 350px;
+                width: 100%;
+            }
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .contact-container { flex-direction: column; }
+            .map-container { min-height: 300px; }
+            .contact-info { padding: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            
+            nav {
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                justify-content: center;
+                transition: 0.4s ease-in-out;
+            }
+
+            nav.active { left: 0; }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            nav ul li a { font-size: 20px; }
+            .phone-btn { margin-top: 10px; font-size: 18px; }
+
+            /* Menü açıldığında ikonun çarpıya dönüşmesi */
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        }
+        /* --- CSS BİTİŞİ --- */
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Akyüz<span> Lojistik</span></a>
+        
+        <div class="menu-toggle" id="mobile-menu-btn">
+            <span></span><span></span><span></span>
+        </div>
+
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="#hakkimizda">Kurumsal</a></li>
+                <li><a href="#filo">Filomuz</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+                <li><a href="tel:+905555555555" class="phone-btn">☎ 0555 555 55 55</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content reveal">
+            <h1>Yükünüz, <br><span>Güvenimizdir.</span></h1>
+            <p>Esenyurt merkezli Akyüz Lojistik ile Türkiye'nin her yerine hızlı, güvenilir ve profesyonel taşımacılık hizmeti sunuyoruz. Zamanında teslimatın doğru adresi.</p>
+            <a href="#iletisim" class="phone-btn" style="padding: 15px 35px; font-size: 18px;">Hemen Teklif Al</a>
+        </div>
+        <div class="hero-image reveal">
+            <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=80" alt="Akyüz Lojistik Filosu">
+        </div>
+    </section>
+
+    <section id="hakkimizda" class="info-section reveal">
+        <h2 class="section-title">Neden Akyüz Lojistik?</h2>
+        <p>İstanbul Esenyurt'taki modern operasyon merkezimizden yola çıkarak, sektördeki yılların tecrübesiyle lojistikte fark yaratıyoruz. Geniş araç filomuz, 7/24 kesintisiz hizmet anlayışımız ve müşteri odaklı çözümlerimizle yükünüzü sadece taşımıyor, işinize değer katıyoruz. Güvenli paketlemeden zamanında teslime kadar her aşamada yanınızdayız.</p>
+    </section>
+
+    <section id="filo" class="gallery-section reveal">
+        <h2 class="section-title" style="text-align: center;">Operasyon Gücümüz</h2>
+        <div class="grid-wrapper">
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80" alt="Modern Depolama">
+                <div class="grid-overlay"><h3>Modern Depolama</h3></div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?auto=format&fit=crop&w=800&q=80" alt="Hızlı Teslimat">
+                <div class="grid-overlay"><h3>Hızlı Teslimat</h3></div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1611516491426-03025e6043c8?auto=format&fit=crop&w=800&q=80" alt="Konteyner Taşımacılığı">
+                <div class="grid-overlay"><h3>Konteyner Taşımacılığı</h3></div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=800&q=80" alt="Kesintisiz Hizmet">
+                <div class="grid-overlay"><h3>Kesintisiz Hizmet</h3></div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8ed3890082?auto=format&fit=crop&w=800&q=80" alt="Güvenli Paketleme">
+                <div class="grid-overlay"><h3>Güvenli Paketleme</h3></div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80" alt="Uluslararası Nakliyat">
+                <div class="grid-overlay"><h3>Geniş Taşıma Ağı</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="iletisim" class="contact-section reveal">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>İletişime Geçin</h2>
+                <p>📍 Süleymaniye, Aziz Nesin Cd. no:50, 34510 Esenyurt/İstanbul</p>
+                <p>📞 <a href="tel:+905555555555">+90 555 555 55 55</a></p>
+                <p>✉️ <a href="mailto:info@akyuzlojistik.com">info@akyuzlojistik.com</a></p>
+                <p style="margin-top: 20px; font-size: 15px; color: #cbd5e1; line-height: 1.5;">Fiyat teklifi ve operasyonel süreçleriniz için 7/24 hizmetinizdeyiz.</p>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2530.4075532032566!2d28.682146750963664!3d41.0432218020273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa72638f1fd95%3A0x1e16dd43333ae073!2saky%C3%BCz%20nakliyat!5e0!3m2!1str!2str!4v1775735616629!5m2!1str!2str" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Akyüz Lojistik. Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Mobil Hamburger Menü (Kayma sorunu çözüldü)
+            const menuToggleBtn = document.getElementById('mobile-menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+            const navItems = document.querySelectorAll('#nav-menu ul li a');
+
+            menuToggleBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                menuToggleBtn.classList.toggle('active');
+            });
+
+            // Mobilde linke tıklayınca menüyü kapat
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuToggleBtn.classList.remove('active');
+                });
+            });
+
+            // 2. Scroll Reveal (Aşağı kaydırdıkça elemanların belirmesi)
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // Sayfa açıldığında hero kısmını hemen aktifleştir
+            setTimeout(() => {
+                document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('active'));
+            }, 100);
+
+        });
+    </script>
+</body>
+</html>
